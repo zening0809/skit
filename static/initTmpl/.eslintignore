@@ -1,0 +1,11 @@
+doc/
+lib/
+node_modules/
+style/
+test/
+layout/
+src/server/*
+src/config/*
+*.MD/
+__base/
+__Modals/
