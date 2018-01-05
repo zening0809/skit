@@ -6,6 +6,7 @@ const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const NyanProgressPlugin = require("nyan-progress-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const DashboardPlugin = require("webpack-dashboard/plugin");
 const path = require("path");
 
@@ -81,7 +82,12 @@ let prodPlugins = [
     
     // 使用 Scope Hositing 特性
     new webpack.optimize.ModuleConcatenationPlugin(),
-    
+    // 创建一个html模板
+    new HtmlWebpackPlugin({
+            title: 'CRM',
+            filename: 'index.html',
+            template: 'template.html'
+    }),
     // 提取Loader定义到同一地方
     new webpack.LoaderOptionsPlugin({
         minimize: true,
@@ -123,7 +129,7 @@ let prodPlugins = [
     new BundleAnalyzerPlugin({
         analyzerMode: "static"
     }),
-    
+
     new webpack.optimize.AggressiveMergingPlugin(), // Merge chunks 来改善chunk传输
     
 ];

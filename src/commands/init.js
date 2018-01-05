@@ -68,7 +68,7 @@ exports.run = function(options){
     }
     
     function createTmpl(callback) {
-        let copyList = ['./.eslintignore', './.gitignore', './app', './dev-config', './ReadMe.md'];
+        let copyList = ['./.eslintignore', './.gitignore', './app', './dev-config', './ReadMe.md', './yarn.lock', './template.html', './nginx'];
         copyList.map((item, index)=>{
             fs.copySync(sysPath.resolve(initTmplPath, item), sysPath.resolve(cwd, item));
         })

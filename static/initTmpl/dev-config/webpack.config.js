@@ -12,7 +12,7 @@ const __DEV__ = (process.env.NODE_ENV || "development") === "development";
 const appsConfig = require("./apps.config.js");
 
 // 定义入口变量
-let entry;
+let entry, output;
 
 
 // 根据不同的环境状态设置不同的开发变量
@@ -26,30 +26,7 @@ if (__DEV__) {
             appsConfig.devServer.appEntrySrc
         ]
     };
-
-} else {
-    entry = {};
-    
-    // 遍历定义好的 app 进行构造
-    appsConfig.apps.forEach(function (app) {
-        // 判断是否加入编译
-        if (app.compiled === false) { return; }
-        
-        // 添加入口
-        entry[app.id] = app.src;
-    });
-}
-
-// 基本配置
-let config = {
-    // cache: false,
-    entry,
-    
-    // 设置开发时源代码映射工具
-    devtool: __DEV__ ? "cheap-module-eval-source-map" : "hidden-source-map",
-    
-    // 所有的出口文件，注意，所有的包括图片等本机被放置到了 dist 目录下，其他文件放置到 static 目录下
-    output: {
+    output = {
         // 生成目录
         path: path.join(__dirname, "../dist"),
         // 生成的公共目录
@@ -60,7 +37,40 @@ let config = {
         sourceMapFilename: "[name].bundle.map",
         // 块文件索引
         chunkFilename: "[name].[chunkhash].chunk.js"
-    },
+    };
+} else {
+    entry = {};
+    // 遍历定义好的 app 进行构造
+    appsConfig.apps.forEach(function (app) {
+        // 判断是否加入编译
+        if (app.compiled === false) { return; }
+        
+        // 添加入口
+        entry[app.id] = app.src;
+    });
+    // 进行导出的配置
+    output = {
+        // 生成目录
+        path: path.join(__dirname, "../dist"),
+        // 生成的公共目录
+        publicPath: './',
+        // 文件名,不加chunkhash,以方便调试时使用，生产环境下可以设置为 [name].bundle.[hash:8].js
+        filename: "[name].bundle.[hash:8].js",
+        // 映射名
+        sourceMapFilename: "[name].bundle.map",
+        // 块文件索引
+        chunkFilename: "[name].[chunkhash].chunk.js"
+    };
+}
+
+// 基本配置
+let config = {
+    // cache: false,
+    entry,
+    // 设置开发时源代码映射工具
+    devtool: __DEV__ ? "cheap-module-eval-source-map" : "hidden-source-map",
+    // 所有的出口文件，注意，所有的包括图片等本机被放置到了 dist 目录下，其他文件放置到 static 目录下
+    output,
     // 配置插件
     plugins: (__DEV__
         ? // 开发环境下所需要的插件
@@ -75,6 +85,7 @@ let config = {
             loaders.jsx,
             loaders.styles.css,
             loaders.styles.scss,
+            loaders.styles.less,
             loaders.assets,
             loaders.json
         ]
@@ -84,7 +95,7 @@ let config = {
     target: "web",
     resolve: {
         modules: ["node_modules", "./app"],
-        extensions: [".js", ".jsx", ".json"]
+        extensions: [".js", ".jsx", ".json", ".less"]
     }
     
 };

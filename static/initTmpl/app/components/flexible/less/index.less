@@ -1,0 +1,25 @@
+@pre-flexible : ~"flexible";
+
+.@{pre-flexible}-container{
+    .@{pre-flexible}-header{
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px;
+        background: #fff;
+        padding-left: 0;
+        &-title{
+            color: fade(#000, 65%);
+            font-size: 14px;
+        }
+        &-icon{
+            color: #fabf40;
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 16px;
+        }
+    }
+    .@{pre-flexible}-content{
+        padding: 15px;
+        padding-left: 0;
+    }
+}

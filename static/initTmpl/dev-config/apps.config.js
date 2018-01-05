@@ -1,5 +1,5 @@
 
-
+const defaultIndexPage = "./dev-config/server/template.html";
 module.exports = {
     projectName : 'use skit',
     // 基本的应用配置信息
@@ -7,8 +7,9 @@ module.exports = {
         {
             id: "app",
             src: "./app/index.js",
+            indexPage: defaultIndexPage,
             // 如果还未开发好,就设置为false
-            compiled: false
+            compiled: true
         }
     ],
     
@@ -17,12 +18,13 @@ module.exports = {
         // 当前待调试的 APP 的入口文件
         appEntrySrc: "./app/index.js",
         // 监听的 Server 端口
-        host: '127.0.0.1',
+        host: '0.0.0.0',
         port: 4000
     },
     
     // 依赖项配置
     proxy: {
+        "/api/*": "http://localhost:3000/",
         //后端服务器地址 http://your.backend/
         // "/api/*": "http://localhost:3001"
     },

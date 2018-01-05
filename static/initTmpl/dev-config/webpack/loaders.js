@@ -63,6 +63,11 @@ exports.styles = {
         test: /\.scss$/,
         loader:  ["style-loader", "css-loader", "sass-loader", postCSSLoader]
     },
+    less: 
+    {
+        test: /\.less$/,
+        loader:  ["style-loader", "css-loader", "less-loader"]
+    },
     css:{
         test: /\.css$/,
         loader: ["style-loader", "css-loader", postCSSLoader]

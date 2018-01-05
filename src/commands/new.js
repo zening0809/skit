@@ -25,7 +25,7 @@ exports.run = function(options){
     }
     function createComponent(componentName) {
         // 定义变量
-        let componentPath = `${cwd}/app/components/${componentName}`,
+        let componentPath = `${cwd}/app/skit_ui/${componentName}`,
         demoPath = `${componentPath}/demo`, 
         stylePath = `${componentPath}/style`;
         // 创建文件
@@ -37,7 +37,6 @@ exports.run = function(options){
         shell.touch(`./index.jsx`);
         fs.writeFileSync(`index.jsx`, 'import ' + JSON.stringify('../../style/index.less') + ' ;', 'UTF-8');
         shell.cd(cwd);
-        
     }
 }
 

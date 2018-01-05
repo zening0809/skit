@@ -1,0 +1,130 @@
+.@{menu-prefix-cls} {
+    // warm theme
+    &-warm,
+    &-warm &-sub {
+      color: @text-color-secondary-warm;
+      background: @menu-warm-bg;
+      .@{menu-prefix-cls}-submenu-title .@{menu-prefix-cls}-submenu-arrow {
+        opacity: .45;
+        transition: all .3s;
+       
+        &:after,
+        &:before {
+          background: #fff;
+        }
+      }
+    }
+  
+    &-warm&-submenu-popup {
+      background: transparent;
+    }
+  
+    &-warm &-inline&-sub {
+      background: @menu-warm-submenu-bg;
+    //   box-shadow: 0 2px 8px rgba(0, 0, 0, .45) inset;
+    }
+  
+    &-warm&-horizontal {
+      border-bottom-color: @menu-warm-bg;
+    }
+  
+    &-warm&-horizontal > &-item,
+    &-warm&-horizontal > &-submenu {
+      border-color: @menu-warm-bg;
+      border-bottom: 0;
+    }
+  
+    &-warm &-item,
+    &-warm &-item-group-title,
+    &-warm &-item > a {
+      color: @text-color-secondary-warm;
+    }
+  
+    &-warm&-inline,
+    &-warm&-vertical,
+    &-warm&-vertical-left,
+    &-warm&-vertical-right {
+      border-right: 0;
+    }
+  
+    &-warm&-inline &-item,
+    &-warm&-vertical &-item,
+    &-warm&-vertical-left &-item,
+    &-warm&-vertical-right &-item {
+      border-right: 0;
+      margin-left: 0;
+      left: 0;
+      &:after {
+        border-right: 0;
+      }
+    }
+  
+    &-warm&-inline &-item,
+    &-warm&-inline &-submenu-title {
+      width: 100%;
+    }
+  
+    &-warm &-item:hover,
+    &-warm &-item-active,
+    &-warm &-submenu-active,
+    &-warm &-submenu-open,
+    &-warm &-submenu-selected,
+    &-warm &-submenu-title:hover {
+      color: #fff;
+      > a {
+        color: #fff;
+      }
+      > .@{menu-prefix-cls}-submenu-title,
+      > .@{menu-prefix-cls}-submenu-title:hover {
+        > .@{menu-prefix-cls}-submenu-arrow {
+          opacity: 1;
+          &:after,
+          &:before {
+            background: #fff;
+          }
+        }
+      }
+    }
+  
+    &-warm &-item-selected {
+      border-right: 0;
+      color: #fabf40;
+      &:after {
+        border-right: 0;
+      }
+      > a,
+      > a:hover {
+        color: #fff;
+      }
+    }
+  
+    &&-warm &-item-selected,
+    &-submenu-popup&-warm &-item-selected {
+      background-color: #fff;
+      color: #fabf40;
+      border-right: 3px solid #fabf40;
+    }
+  
+    // Disabled state sets text to warm gray and nukes hover/tab effects
+    &-warm &-item-disabled,
+    &-warm &-submenu-disabled {
+      &,
+      > a {
+        opacity: 0.8;
+        color: @disabled-color-warm !important;
+      }
+      > .@{menu-prefix-cls}-submenu-title {
+        color: @disabled-color-warm !important;
+      }
+    }
+
+    &-item-group-title {
+        color: @text-color-secondary;
+        font-size: @font-size-base;
+        line-height: @line-height-base;
+        padding: 8px 16px;
+        transition: all .3s;
+        background: #fd8161;
+      }
+  }
+  
