@@ -18,7 +18,6 @@ global.childProcess = require('child_process');
 
 // 找到用户路径
 global.USER_HOME = process.env[process.platform == 'win32' ? 'USERPROFILE' : 'HOME'];
-
 global.SKIT_HOME = sysPath.join(USER_HOME, '.skit');
 global.SKIT_RC = sysPath.join(USER_HOME, '.skitrc');
 // 找到commands目录路径

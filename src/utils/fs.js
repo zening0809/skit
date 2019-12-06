@@ -4,48 +4,48 @@ let fs = require('fs');
 let path = require('path');
 let yaml = require('js-yaml');
 
-exports.readJSON = function(loc){
-    try {
-        return JSON.parse(fs.readFileSync(loc, 'utf8'));
-    } catch (err) {
-        err.message = `${loc}: ${err.message}`;
-        throw err;
-    }
+exports.readJSON = function (loc) {
+  try {
+    return JSON.parse(fs.readFileSync(loc, 'utf8'));
+  } catch (err) {
+    err.message = `${loc}: ${err.message}`;
+    throw err;
+  }
 };
 
-exports.readYAML = function(loc) {
-    try {
-        return yaml.safeLoad(fs.readFileSync(loc, 'utf-8')) || {};
-    } catch (err) {
-        err.message = `${loc}: ${err.message}`;
-        throw err;
-    }
+exports.readYAML = function (loc) {
+  try {
+    return yaml.safeLoad(fs.readFileSync(loc, 'utf-8')) || {};
+  } catch (err) {
+    err.message = `${loc}: ${err.message}`;
+    throw err;
+  }
 };
 
-exports.readJS = function(loc){
-    try {
-        delete require.cache[loc];
-        return require(loc);
-    } catch (err) {
-        err.message = `${loc}: ${err.message}`;
-        throw err;
-    }
+exports.readJS = function (loc) {
+  try {
+    delete require.cache[loc];
+    return require(loc);
+  } catch (err) {
+    err.message = `${loc}: ${err.message}`;
+    throw err;
+  }
 };
 
-exports.fileExists = function(filePath) {
-    try {
-        return fs.statSync(filePath).isFile();
-    } catch (err) {
-        return false;
-    }
+exports.fileExists = function (filePath) {
+  try {
+    return fs.statSync(filePath).isFile();
+  } catch (err) {
+    return false;
+  }
 };
 
-exports.dirExists = function(dirPath) {
-    try {
-        return fs.statSync(dirPath).isDirectory();
-    } catch (err) {
-        return false;
-    }
+exports.dirExists = function (dirPath) {
+  try {
+    return fs.statSync(dirPath).isDirectory();
+  } catch (err) {
+    return false;
+  }
 };
 
 /**
@@ -55,23 +55,23 @@ exports.dirExists = function(dirPath) {
  * @description 该方法接受一个文件路径作为参数，把文件内容解析为 JavaScript 对象后返回
  * 如果文件不存在，返回空对象。
  */
-exports.readFile = function(loc){
-    let content = null;
-    switch (path.extname(loc)) {
+exports.readFile = function (loc) {
+  let content = null;
+  switch (path.extname(loc)) {
     case '.js':
-        content = exports.readJS(loc);
-        break;
+      content = exports.readJS(loc);
+      break;
     case '.json':
-        content = exports.readJSON(loc);
-        break;
+      content = exports.readJSON(loc);
+      break;
     case '.yml':
     case '.yaml':
-        content = exports.readYAML(loc);
-        break;
+      content = exports.readYAML(loc);
+      break;
     default:
-        break;
-    }
-    return content;
+      break;
+  }
+  return content;
 };
 
 /**
@@ -82,13 +82,36 @@ exports.readFile = function(loc){
  * JavaScript 对象，如果所有文件都不存在，返回空对象。
  *
  */
-exports.readFileAny = function(files){
-    for(const file of files){
-        if(fs.existsSync(file)){
-            return exports.readFile(file);
-        }
+exports.readFileAny = function (files) {
+  for (const file of files) {
+    if (fs.existsSync(file)) {
+      return exports.readFile(file);
     }
-    return null;
+  }
+  return null;
+};
+
+/**
+ *
+ *
+ * @param {string} [path='./']
+ * @param {boolean} [isDic=false]
+ * @returns
+ */
+exports.readDirectory = function (path = './', isDic = false) {
+  let components = []
+  const files = fs.readdirSync(path)
+  files.forEach(function (item, index) {
+    if (isDic) {
+      let stat = fs.lstatSync("./" + item)
+      if (stat.isDirectory() === true) {
+        components.push(item)
+      }
+    } else {
+      components.push(item)
+    }
+  })
+  return components;
 };
 
 
@@ -100,31 +123,31 @@ exports.readFileAny = function(files){
  * JavaScript 对象，如果所有文件都不存在，返回空对象。
  *
  */
-exports.deleteFolderRecursive = function(filePath, remainRootDir) {
-    if (fs.existsSync(filePath)) {
-        fs.readdirSync(filePath).forEach((file) => {
-            const currentPath = filePath + '/' + file;
-            if (fs.lstatSync(currentPath).isDirectory()) { // recurse
-                exports.deleteFolderRecursive(currentPath);
-            } else { // delete file
-                fs.unlinkSync(currentPath);
-            }
-        });
+exports.deleteFolderRecursive = function (filePath, remainRootDir) {
+  if (fs.existsSync(filePath)) {
+    fs.readdirSync(filePath).forEach((file) => {
+      const currentPath = filePath + '/' + file;
+      if (fs.lstatSync(currentPath).isDirectory()) { // recurse
+        exports.deleteFolderRecursive(currentPath);
+      } else { // delete file
+        fs.unlinkSync(currentPath);
+      }
+    });
 
-        if(!remainRootDir) {
-            fs.rmdirSync(filePath);
-        }
+    if (!remainRootDir) {
+      fs.rmdirSync(filePath);
     }
+  }
 };
 
-exports.getFileSize = function(filename) {
-    try {
-        const stats = fs.statSync(filename);
+exports.getFileSize = function (filename) {
+  try {
+    const stats = fs.statSync(filename);
 
-        return stats['size'] > 1024
-                ? (stats['size'] / 1024).toFixed(2) + ' KB'
-                : stats['size'] + ' Bytes';
-    } catch (err) {
-        return null;
-    }
+    return stats['size'] > 1024
+      ? (stats['size'] / 1024).toFixed(2) + ' KB'
+      : stats['size'] + ' Bytes';
+  } catch (err) {
+    return null;
+  }
 };

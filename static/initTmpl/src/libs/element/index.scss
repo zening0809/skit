@@ -1,0 +1,11 @@
+/************** element-ui 样式重置 *******************/
+.el-cascader,
+.el-select,
+.el-input-number,
+.el-date-editor.el-input,
+.el-date-editor--date.el-input,
+.el-date-editor--datetime.el-input,
+.el-date-editor--daterange.el-input__inner,
+.el-date-editor--datetimerange.el-input__inner {
+    width: 100%;
+}
