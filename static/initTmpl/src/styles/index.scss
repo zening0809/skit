@@ -1,115 +1,191 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+@import './btn.scss';
 
-/* reset */
-html{text-size-adjust:100%;}
-html,body,div,h1,h2,h3,h4,h5,h6,dl,dt,dd,ol,ul,li,p,article,aside,canvas,header,footer,section,video,audio{margin:0;padding:0;border:0;}
-h1,h2,h3,h4,h5,h6,small{font-size:100%;font-weight:normal;}
-li{list-style:none;}
-a{text-decoration:none;cursor:pointer;};
-*{-webkit-tap-highlight-color:rgba(0,0,0,0);-webkit-tap-highlight-color:transparent;outline:none;}
-
-/* function */
-.f-cb:after,.f-cbli li:after{display:block;clear:both;visibility:hidden;height:0;overflow:hidden;content:".";}
-.f-cb,.f-cbli li{zoom:1;}
-.f-ib{display:inline-block;*display:inline;*zoom:1;}
-.f-dn{display:none;}
-.f-db{display:block;}
-.f-fl{float:left;}
-.f-fr{float:right;}
-.f-pr{position:relative;}
-.f-prz{position:relative;zoom:1;}
-.f-oh{overflow:hidden;}
-.f-fwn{font-weight:normal;}
-.f-fwb{font-weight:bold;}
-.f-tal{text-align:left;}
-.f-tac{text-align:center;}
-.f-tar{text-align:right;}
-.f-taj{text-align:justify;text-justify:inter-ideograph;}
-.f-vam,.f-vama * {vertical-align:middle;}
-.f-wsn{word-wrap:normal;white-space:nowrap;}
-.f-pre{overflow:hidden;text-align:left;white-space:pre-wrap;word-wrap:break-word;word-break:break-all;}
-.f-wwb{white-space:normal;word-wrap:break-word;word-break:break-all;}
-.f-ti{overflow:hidden;text-indent:-30000px;}
-.f-ti2{text-indent:2em;}
-.f-lhn{line-height:normal;}
-.f-tdu,.f-tdu:hover{text-decoration:underline;}
-.f-tdn,.f-tdn:hover{text-decoration:none;}
-.f-toe1{overflow:hidden;word-wrap:normal;white-space:nowrap;text-overflow:ellipsis;}
-.f-toe2{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
-.f-toe3{overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;}
-.f-csp{cursor:pointer;}
-.f-usn{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}
-
-/*滚动条整体样式*/
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    background-color: #f5f5f5;
-}
-::-webkit-scrollbar-track {
-    border-radius: 6px;
-    background-color: #fff;
-}
-/*滚动条里面小方块*/
-::-webkit-scrollbar-thumb {
-    border-radius: 6px;
-    background-color: rgba(144, 147, 153, .5);
-    background-color: #dfe2ea;
+body {
+  height: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
-html, body, #app {
-    width: 100%;
-    height: 100%;
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+label {
+  font-weight: 700;
 }
 
-.basic-list {
-    &.basic-list--editable {
-        .el-table th,
-        .el-table td,
-        .el-table .cell,
-        .el-table .edit-cell {
-            padding: 0 !important;
-            height: 40px;
-            line-height: 40px;
-            box-sizing: border-box;
-        }
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+#app {
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.no-padding {
+  padding: 0px !important;
+}
+
+.padding-content {
+  padding: 4px 0;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}
+
+.pr-5 {
+  padding-right: 5px;
+}
+
+.pl-5 {
+  padding-left: 5px;
+}
+
+.block {
+  display: block;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.inlineBlock {
+  display: block;
+}
+
+.clearfix {
+  &:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+  }
+}
+
+aside {
+  background: #eef1f6;
+  padding: 8px 24px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+  display: block;
+  line-height: 32px;
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  color: #2c3e50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  a {
+    color: #337ab7;
+    cursor: pointer;
+
+    &:hover {
+      color: rgb(32, 160, 255);
     }
-    .basic-list__col--action {
-        .action-btn {
-            display: inline-block;
-            margin-right: 15px;
-            vertical-align: middle;
-            color: #606266;
-            &:last-child {
-                margin-right: 0;
-            }
-            &[class*="el-icon-"] {
-                color: #7B8AA4;
-                font-size: 18px;
-                &:hover {
-                    color: #409eff;
-                }
-            }
-        }
-        .link-btn {
-            color: #409eff;
-        }
-        .el-dropdown-link {
-            color: #409eff;
-            cursor: pointer;
-        }
-    }
+  }
 }
 
-.field-set-dlg {
-    .el-transfer-panel__header {
-        .el-checkbox .el-checkbox__label {
-            font-size: 12px;
-        }
-    }
-    .el-transfer-panel__item {
-        display: block;
-    }
+//main-container全局样式
+.app-container {
+  padding: 20px;
 }
 
+.components-container {
+  margin: 30px 50px;
+  position: relative;
+}
 
+.pagination-container {
+  margin-top: 30px;
+}
+
+.text-center {
+  text-align: center
+}
+
+.sub-navbar {
+  height: 50px;
+  line-height: 50px;
+  position: relative;
+  width: 100%;
+  text-align: right;
+  padding-right: 20px;
+  transition: 600ms ease position;
+  background: linear-gradient(90deg, rgba(32, 182, 249, 1) 0%, rgba(32, 182, 249, 1) 0%, rgba(33, 120, 241, 1) 100%, rgba(33, 120, 241, 1) 100%);
+
+  .subtitle {
+    font-size: 20px;
+    color: #fff;
+  }
+
+  &.draft {
+    background: #d0d0d0;
+  }
+
+  &.deleted {
+    background: #d0d0d0;
+  }
+}
+
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+
+  &:hover {
+    color: rgb(32, 160, 255);
+  }
+}
+
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+}
+
+//refine vue-multiselect plugin
+.multiselect {
+  line-height: 16px;
+}
+
+.multiselect--active {
+  z-index: 1000 !important;
+}

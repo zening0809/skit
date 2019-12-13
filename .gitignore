@@ -3,6 +3,8 @@
 # dependencies
 /node_modules
 
+/lib
+
 # misc
 .DS_Store
 .env.local

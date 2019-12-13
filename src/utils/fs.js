@@ -40,6 +40,22 @@ exports.fileExists = function (filePath) {
   }
 };
 
+/**
+ *
+ *
+ * @param {*} filePath
+ * @returns
+ */
+exports.fileHasExists = function (filePath) {
+  return fs.exists(filePath, (exists) => {
+    if(exists) {
+      return true
+    }else{
+      return false
+    }
+  });
+};
+
 exports.dirExists = function (dirPath) {
   try {
     return fs.statSync(dirPath).isDirectory();
@@ -151,3 +167,28 @@ exports.getFileSize = function (filename) {
     return null;
   }
 };
+
+exports.writeLineFeed = function (data, splitDiv) {
+  let res = data.split(splitDiv)
+  let str = ''
+  res.map((item, index) => {
+    if (index !== res.length - 1) {
+      str += item + ',\n'
+    } else {
+      str += item
+    }
+  })
+  return str;
+}
+
+exports.writeViewIndexFile = function(filePath, subPath, name) {
+  fs.readFile(filePath, 'utf8',  (err, data) => {
+    if (err) throw err;
+    let res = data.replace(/'!!!!'/g, `import ${name} from './${name}'\n'!!!!'`)
+    res = res.replace(/'@@@@'/g, `...${name},\n  '@@@@'`)
+    let viewRes = res.replace(/'@@@@'/g, '')
+    viewRes = viewRes.replace(/'!!!!'/g, '')
+    fs.writeFileSync(filePath, res, 'utf8')
+    fs.writeFileSync(subPath, viewRes, 'utf8')
+  })
+}

@@ -1,12 +1,5 @@
 module.exports = {
-    presets: [
-        '@vue/app',
-        ['@babel/preset-env', {
-            'modules': false
-        }]
-    ],
-    plugins: [
-        'jsx-v-model',
-        'lodash'
-    ]
+  presets: [
+    '@vue/app'
+  ]
 }
