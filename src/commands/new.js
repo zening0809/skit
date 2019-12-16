@@ -9,7 +9,9 @@ exports.abbr = 'n';
 
 exports.setOptions = () => { };
 const staticSearchPath = sysPath.resolve(__dirname, '../../static/containers/searchBar/');
+const staticTablePath = sysPath.resolve(__dirname, '../../static/containers/tableList/');
 const staticContainersPath = sysPath.resolve(__dirname, '../../static/containers/');
+const staticStorePath = sysPath.resolve(__dirname, '../../static/store/');
 exports.run = function (options) {
   // 从第三个参数开始创建
   let cwd = options.cwd;
@@ -27,9 +29,11 @@ exports.run = function (options) {
     // 定义变量
     let viewPath = `${cwd}/src/views/${configData.name}`,
     containersPath = `${viewPath}/containers`,
-    searchBarPath = `${containersPath}/searchBar`;
+    searchBarPath = `${containersPath}/exactSearch`,
+    tablePath = `${containersPath}/exactList`,
+    storePath = `${viewPath}/store`;
     // 创建文件
-    shell.mkdir('-p', [viewPath, containersPath, searchBarPath]);
+    shell.mkdir('-p', [viewPath, containersPath, searchBarPath, tablePath, storePath]);
     shell.cd(viewPath);
     // 创建当前模块入口文件
     // fs.copySync(sysPath.resolve(staticContainersPath, 'index.vue'), sysPath.resolve(viewPath, 'index.vue'));
@@ -41,9 +45,10 @@ exports.run = function (options) {
     let searchMap = generateSearchBar(configData, searchBarPath)
     let searchMapStr = UtilFs.writeLineFeed(JSON.stringify(searchMap).replace(/\"/g,"'"), ',')
     fs.writeFileSync(`searchMap.js`, `const searchMap = ${searchMapStr} \nexport default searchMap`, 'UTF-8');
+    generateTableList(configData, tablePath)
+    generateStore(configData, storePath)
     shell.cd(cwd);
   }
-
   function createMenu(menuData){
     let menuPathList = menuData.path.split('/')
     const menuFileName = menuPathList[1]
@@ -102,6 +107,17 @@ exports.run = function (options) {
         fields,
         fieldsArr
       }
+  }
+  function generateTableList(configData, tablePath){
+      shell.cd(tablePath);
+      fs.copySync(sysPath.resolve(staticTablePath, 'index.vue'), sysPath.resolve(tablePath, 'index.vue'));
+      let tableListStr = UtilFs.writeLineFeed(JSON.stringify(configData.containers.tableConfig).replace(/\"/g,"'"), ',')
+      fs.writeFileSync(`tableMap.js`, `const tableMap = ${tableListStr} \nexport default tableMap`, 'UTF-8');
+      return 
+  }
+  function generateStore(configData, storePath){
+      shell.cd(storePath);
+      fs.copySync(sysPath.resolve(staticStorePath, 'index.js'), sysPath.resolve(storePath, 'index.js'));
   }
 }
 
