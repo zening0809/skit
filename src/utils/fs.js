@@ -4,6 +4,12 @@ let fs = require('fs');
 let path = require('path');
 let yaml = require('js-yaml');
 
+/**
+ *
+ *
+ * @param {*} loc
+ * @returns
+ */
 exports.readJSON = function (loc) {
   try {
     return JSON.parse(fs.readFileSync(loc, 'utf8'));
@@ -13,6 +19,12 @@ exports.readJSON = function (loc) {
   }
 };
 
+/**
+ *
+ *
+ * @param {*} loc
+ * @returns
+ */
 exports.readYAML = function (loc) {
   try {
     return yaml.safeLoad(fs.readFileSync(loc, 'utf-8')) || {};
@@ -22,6 +34,12 @@ exports.readYAML = function (loc) {
   }
 };
 
+/**
+ *
+ *
+ * @param {*} loc
+ * @returns
+ */
 exports.readJS = function (loc) {
   try {
     delete require.cache[loc];
@@ -32,28 +50,18 @@ exports.readJS = function (loc) {
   }
 };
 
-exports.fileExists = function (filePath) {
-  try {
-    return fs.statSync(filePath).isFile();
-  } catch (err) {
-    return false;
-  }
-};
-
 /**
  *
  *
  * @param {*} filePath
  * @returns
  */
-exports.fileHasExists = function (filePath) {
-  return fs.exists(filePath, (exists) => {
-    if(exists) {
-      return true
-    }else{
-      return false
-    }
-  });
+exports.fileExists = function (filePath) {
+  try {
+    return fs.statSync(filePath).isFile();
+  } catch (err) {
+    return false;
+  }
 };
 
 exports.dirExists = function (dirPath) {
@@ -156,6 +164,12 @@ exports.deleteFolderRecursive = function (filePath, remainRootDir) {
   }
 };
 
+/**
+ *
+ *
+ * @param {*} filename
+ * @returns
+ */
 exports.getFileSize = function (filename) {
   try {
     const stats = fs.statSync(filename);
@@ -181,11 +195,23 @@ exports.writeLineFeed = function (data, splitDiv) {
   return str;
 }
 
-exports.writeViewIndexFile = function(filePath, subPath, name) {
+/**
+ *
+ *
+ * @param {*} filePath
+ * @param {*} subPath
+ * @param {*} name
+ * @param {boolean} [isAnalysis=true]
+ */
+exports.writeViewIndexFile = function(filePath, subPath, name, isAnalysis = true) {
   fs.readFile(filePath, 'utf8',  (err, data) => {
     if (err) throw err;
     let res = data.replace(/'!!!!'/g, `import ${name} from './${name}'\n'!!!!'`)
-    res = res.replace(/'@@@@'/g, `...${name},\n  '@@@@'`)
+    if(isAnalysis){
+      res = res.replace(/'@@@@'/g, `...${name},\n  '@@@@'`)
+    }else{
+      res = res.replace(/'@@@@'/g, `${name},\n  '@@@@'`)
+    }
     let viewRes = res.replace(/'@@@@'/g, '')
     viewRes = viewRes.replace(/'!!!!'/g, '')
     fs.writeFileSync(filePath, res, 'utf8')

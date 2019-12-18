@@ -1,24 +1,14 @@
 import { pageListMerge, generateActions } from '@/store/helper'
+import actionMap from './actionMap'
 
 const DEFAULTS = {
-  tableData: [],
-  total: 0
 }
 
 export default pageListMerge({
   namespaced: true,
   actions: {
-    ...generateActions({
-      caller: api.testList,
-      items: [
-        { key: 'queryTest', callee: 'bbbbbb', mutation: 'testList' }
-      ]
-    })
+    ...generateActions(actionMap)
   },
   mutations: {
-    testList(state, content) {
-      state.tableData = content.rows
-      state.total = content.total
-    }
   }
 }, DEFAULTS)

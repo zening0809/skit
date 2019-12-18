@@ -1,8 +1,7 @@
 <template>
   <div>
-    <search-bar />
-    <!-- 列表 -->
-    <Tbale-list :state="state" />
+    <search-bar :dispatch="dispatch" :update-state="updateState" />
+    <Tbale-list :state="state" :dispatch="dispatch" />
   </div>
 </template>
 <script>
@@ -30,22 +29,17 @@ export default {
       }
     }
   },
-  computed: {
-  },
+  computed: {},
   created() {
     this.registStore(store)
   },
   mounted() {
-    this.queryList()
   },
   methods: {
-    queryList(query = {}) {
-      this.dispatch('queryTest', {
-        data: { page: this.listQuery.page, limit: this.listQuery.limit }
-      })
-    }
   }
 }
 </script>
+
+
 
 
