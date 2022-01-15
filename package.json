@@ -40,7 +40,7 @@
     "optimist": "^0.6.1",
     "replacestream": "^4.0.3",
     "right-pad": "^1.0.1",
-    "shelljs": "^0.7.8",
+    "shelljs": "^0.8.5",
     "webpack": "^3.8.1",
     "yargs": "^10.0.3"
   }
